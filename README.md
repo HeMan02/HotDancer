@@ -9,6 +9,9 @@
 
 > [!TIP]
 > The powers are all separate and scalable from code.
+
+> [!IMPORTANT]
+> The Build to test the game it is on repo folder "Build".
 > 
 ### Assets and Audio
 
