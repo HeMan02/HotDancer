@@ -5,7 +5,9 @@
 
 > [!NOTE]
 > This is an implementation of HotDancer in C# with Unity3D. It is a Roguelikes arcade.
-> 
+>
+> [!TIP]
+> The powers are all separate and scalable from code.
 ### Assets and Audio
 
 Use all free asssets.
