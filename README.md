@@ -4,7 +4,11 @@
 <!---Link to the helpful section: [Link Text](#thisll-be-a-helpful-section-about-the-greek-letter-Θ). --->
 
 > [!NOTE]
-> This is an implementation of HotDancer in C#. It is a simple Roguelikes arcade.
+> This is an implementation of HotDancer in C# with Unity3D. It is a Roguelikes arcade.
+>
+
+> [!TIP]
+> The powers are all separate and scalable from code.
 > 
 ### Assets and Audio
 
