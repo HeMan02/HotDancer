@@ -1,7 +1,11 @@
 # HotDancer
+![Conventional Commits](https://img.shields.io/badge/version-1.0.1-green.svg)
 
+<!---Link to the helpful section: [Link Text](#thisll-be-a-helpful-section-about-the-greek-letter-Θ). --->
 
-This is an implementation of HotDancer in C#. It is a simple Roguelikes arcade.
+> [!NOTE]
+> This is an implementation of HotDancer in C#. It is a simple Roguelikes arcade.
+> 
 ### Assets and Audio
 
 Use all free asssets.
