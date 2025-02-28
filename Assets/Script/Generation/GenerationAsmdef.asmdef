@@ -1,0 +1,22 @@
+{
+    "name": "GenerationAsmdef",
+    "rootNamespace": "",
+    "references": [
+        "GUID:015e5d83e249b3741a522ef728aa9d0b",
+        "GUID:4fea67b66e355e74cbb3763c8e976123",
+        "GUID:d58afa8bd3f145f4a97de4eff6215dd9",
+        "GUID:6df8686c0f7e5bc4185cd09246e2546c",
+        "GUID:1ce24a7a997db6c47948d0f3f75393e1",
+        "GUID:18cc3a21efdc41d4d957d0e97878591b",
+        "GUID:d3c6014ac5ba4e9478dc35f5cab6476c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

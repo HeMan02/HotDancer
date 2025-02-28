@@ -1,0 +1,17 @@
+{
+    "name": "MediatorAsmdef",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1ce24a7a997db6c47948d0f3f75393e1",
+        "GUID:d58afa8bd3f145f4a97de4eff6215dd9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

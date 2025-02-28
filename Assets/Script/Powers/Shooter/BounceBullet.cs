@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BounceBullet : IShooter, IEntity
+{
+    private int _count;
+    public string NamePower => "BounceBullet";
+    public int EffectValue { get => 1 * Count; }
+    public float Probability { get => 1 * Count; }
+    public int Time { get => 60 * Count; }
+    public int EffectValueStart { get => 1 * Count; }
+    public int EffectValuePower { get => 1 * Count; }  // Da cambiare gli altri parametri 
+    public int Count { get => _count; set { _count = value; Init(); } } // ANDRE SUGGERIMENTO CON INIT
+    public IEntity.TypeEvents TypePowers { get; set; }
+
+
+    PowerInfo<IEntity> powerInfo = null;
+
+    public BounceBullet()
+    {
+        Count = 0;
+    }
+
+    public void Init()
+    {
+        SetValuesStandard();
+    }
+
+    private void SetValuesStandard()
+    {
+        if(powerInfo is null)
+        {
+            powerInfo = new PowerInfo<IEntity>();
+            powerInfo.Entity = this;
+            powerInfo.Entity.TypePowers = IEntity.TypeEvents.BounceBullet;
+            powerInfo.Name = typeof(BounceBullet).FullName;
+            PowersManager.Instance.RegisterPowerInterface<IDamage>(powerInfo);
+        }
+    }
+
+    public void DoDamage(int value)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SetValuesPower(PowerInfo<IEntity> obj)
+    {
+        powerInfo = new PowerInfo<IEntity>();
+        powerInfo.Entity = this;
+        powerInfo.Entity.TypePowers = IEntity.TypeEvents.BounceBullet;
+        powerInfo.Name = typeof(BounceBullet).FullName;
+    }
+
+    public void DoShoot(GameObject target)
+    {
+        throw new System.NotImplementedException();
+    }
+}

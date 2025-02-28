@@ -1,0 +1,16 @@
+{
+    "name": "PowersAsmdef",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1ce24a7a997db6c47948d0f3f75393e1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
