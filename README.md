@@ -24,6 +24,3 @@ Survival on random level generation, every certain time get a new random power f
 ### Bugs
 
 Please report bugs as issues.
-
-### Contributing
-Pull requests are welcome! Please ensure code style and quality compliance with npm run lint and include any built files.
