@@ -12,7 +12,11 @@
 
 > [!IMPORTANT]
 > The Build to test the game it is on repo folder "Build".
-> 
+
+### Core script
+
+Use event dispaccer logic for differents powers, generics Types for achievements memory 
+
 ### Assets and Audio
 
 Use all free asssets.
