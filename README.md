@@ -9,13 +9,30 @@
 
 > [!TIP]
 > The powers are all separate and scalable from code.
+> The Achievements are generics Types
 
 > [!IMPORTANT]
 > The Build to test the game it is on repo folder "Build".
 
-### Core script
+### Table of Contents
+list
 
-Use event dispaccer logic for differents powers, generics Types for achievements memory 
+### Motivation
+I started developing this project for the wrong reason: my goal was to design and grow up my programming skill.
+Actually it was satisfying at all to create a scalable and genetics project.
+
+### Introduction and Content
+* Event dispatcher, Design pattern used: Mediator for communication between the various classes using Events and Delegate
+* Serialize and historicized saving Achievements: Use of serialization of generic types T with manager Achievements with generic management
+* Design scalability and generic reuse of classes and interfaces
+* Design division and use of Assembly Definition
+* UI management and serialized programming
+* Use of Service Locator for Singleton management
+* Enemy navigation using NavMesh
+* Insertion of Music and basic effects
+* Creation of build and screen adaptation
+
+### Code Example
 
 ### Assets and Audio
 
