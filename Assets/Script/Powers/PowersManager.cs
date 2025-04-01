@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class PowersManager
 {
     public event Action<bool> attackAction;
     public static PowersManager Instance;
-    public Dictionary<Type, List< PowerInfo<IEntity>>> dicPowersInterface = new Dictionary<Type, List<PowerInfo<IEntity>>>();
+    public Dictionary<Type, List<IEntity>> dicPowersInterface = new Dictionary<Type, List<IEntity>>();
 
     public PowersManager()
     {
@@ -33,7 +34,7 @@ public class PowersManager
         return false;
     }
 
-    public void UnregisterPower<T>(PowerInfo<IEntity> power) where T : class
+    public void UnregisterPower<T>(IEntity power) where T : class
     {
         if (!ExistPowerInterface<T>())
         {
@@ -48,11 +49,11 @@ public class PowersManager
         }
     }
 
-    public void RegisterPowerInterface<T>(PowerInfo<IEntity> power) where T : class
+    public void RegisterPowerInterface<T>(IEntity power) where T : class
     {
         if (!ExistPowerInterface<T>())
         {
-            List<PowerInfo<IEntity>> listPowers = new List<PowerInfo<IEntity>>();
+            List<IEntity> listPowers = new List<IEntity>();
             listPowers.Add(power);
             dicPowersInterface.Add(typeof(T), listPowers);
         }
@@ -60,7 +61,14 @@ public class PowersManager
         {
             if (!dicPowersInterface[typeof(T)].Contains(power))
             {
-                dicPowersInterface[typeof(T)].Add(power);
+               IEntity objFind = dicPowersInterface[typeof(T)].Where(o => o.TypePowers.Equals(power.TypePowers)).FirstOrDefault();
+                if (objFind is null)
+                    dicPowersInterface[typeof(T)].Add(power);
+                else
+                {
+                    dicPowersInterface[typeof(T)].Remove(objFind);
+                    dicPowersInterface[typeof(T)].Add(power);
+                }
             }
         }
     }
@@ -69,11 +77,11 @@ public class PowersManager
     {
         foreach (Type type in dicPowersInterface.Keys)
         {
-            foreach (PowerInfo<IEntity> power in dicPowersInterface[type])
+            foreach (IEntity power in dicPowersInterface[type])
             {
-                if (power.Entity.TypePowers.Equals(typePower))
+                if (power.TypePowers.Equals(typePower))
                 {
-                    return power.Entity.EffectValuePower;
+                    return power.EffectValuePower;
                 }
             }
         }
@@ -84,11 +92,11 @@ public class PowersManager
     {
         foreach (Type type in dicPowersInterface.Keys)
         {
-            foreach (PowerInfo<IEntity> power in dicPowersInterface[type])
+            foreach (IEntity power in dicPowersInterface[type])
             {
-                if (power.Entity.TypePowers.Equals(typePower))
+                if (power.TypePowers.Equals(typePower))
                 {
-                    if(power.Entity.Count == 0)
+                    if(power.Count == 0)
                     return false;
                     else
                     return true;
@@ -98,30 +106,31 @@ public class PowersManager
         return false;
     }
 
-    public PowerInfo<IEntity> UpdatePower(PowerInfo<IEntity> power)
+    public IEntity UpdatePower(IEntity power)
     {
         foreach (Type item in dicPowersInterface.Keys)
         {
-            PowerInfo<IEntity> powerTmp = dicPowersInterface[item].Find(o => o.Entity == power.Entity);
+            IEntity powerTmp = dicPowersInterface[item].Find(o => o == power);
             if (powerTmp!=null)
             {
-                powerTmp.Entity.Count += 1;
+                powerTmp.Count += 1;
                 dicPowersInterface[item].Remove(power);
                 dicPowersInterface[item].Add(powerTmp);
+
                 return powerTmp;
             }
         }
         return null;
     }
 
-    public PowerInfo<IEntity> DisablePower(PowerInfo<IEntity> power)
+    public IEntity DisablePower(IEntity power)
     {
         foreach (Type item in dicPowersInterface.Keys)
         {
-            PowerInfo<IEntity> powerTmp = dicPowersInterface[item].Find(o => o.Entity == power.Entity);
+            IEntity powerTmp = dicPowersInterface[item].Find(o => o == power);
             if (powerTmp != null)
             {
-                powerTmp.Entity.Count -= 1;
+                powerTmp.Count -= 1;
                 dicPowersInterface[item].Remove(power);
                 dicPowersInterface[item].Add(powerTmp);
                 return powerTmp;
@@ -135,11 +144,11 @@ public class PowersManager
         attackAction?.Invoke(value);
     }
 
-    public List<PowerInfo<IEntity>> GetRandomPowers()
+    public List<IEntity> GetRandomPowers()
     {
          
-        List<PowerInfo<IEntity>> randomPowersTmp = new List<PowerInfo<IEntity>>();
-        List<PowerInfo<IEntity>> randomPowers = new List<PowerInfo<IEntity>>();
+        List<IEntity> randomPowersTmp = new List<IEntity>();
+        List<IEntity> randomPowers = new List<IEntity>();
         int countMaxRandomValue;
 
         foreach (Type key in dicPowersInterface.Keys)
@@ -157,9 +166,9 @@ public class PowersManager
         return randomPowers;
     }
 
-    public List<PowerInfo<IEntity>> GetListPowers()
+    public List<IEntity> GetListPowers()
     {
-        List<PowerInfo<IEntity>> randomPowers = new List<PowerInfo<IEntity>>();
+        List<IEntity> randomPowers = new List<IEntity>();
         foreach (Type key in dicPowersInterface.Keys)
         {
             if (key.Equals(typeof(IPowerEnemy)))
@@ -169,13 +178,13 @@ public class PowersManager
         return randomPowers;
     }
 
-    public PowerInfo<IEntity> GetPower(IEntity.TypeEvents typePower) 
+    public IEntity GetPower(IEntity.TypeEvents typePower) 
     {
         foreach (Type type in dicPowersInterface.Keys)
         {
-            foreach (PowerInfo<IEntity> power in dicPowersInterface[type])
+            foreach (IEntity power in dicPowersInterface[type])
             {
-                if (power.Entity.TypePowers.Equals(typePower))
+                if (power.TypePowers.Equals(typePower))
                 {
                     return power;
                 }

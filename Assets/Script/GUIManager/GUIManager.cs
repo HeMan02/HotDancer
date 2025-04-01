@@ -16,9 +16,9 @@ public class GUIManager : MonoBehaviour
     [SerializeField] public GameObject powerObjRandomGenerateFather;
 
     // DIC POWERS
-    List<PowerInfo<IEntity>> powerRandomGenerate;
-    Dictionary<GameObject, PowerInfo<IEntity>> dicObjRandomGenerationPowers = new Dictionary<GameObject, PowerInfo<IEntity>>();
-    List<PowerInfo<IEntity>> activePowers = new List<PowerInfo<IEntity>>();
+    List<IEntity> powerRandomGenerate;
+    Dictionary<GameObject, IEntity> dicObjRandomGenerationPowers = new Dictionary<GameObject, IEntity>();
+    List<IEntity> activePowers = new List<IEntity>();
 
     // RECHARGE BULLET
     [Header("Recharge bullet")]
@@ -45,10 +45,11 @@ public class GUIManager : MonoBehaviour
     [SerializeField] public Image endGameLose;
     [SerializeField] public GameObject endGameObj;
     [SerializeField] public Text endGameText;
+    private bool endGame;
 
     // ENEMY
     [Header("Enemy")]
-    [SerializeField]  public Sprite[] spritesEnemies;
+    [SerializeField] public Sprite[] spritesEnemies;
     [SerializeField] public UnityEngine.UI.Image imageEnemy;
     [SerializeField] public Text numberEnemies;
     int maxEnemy = 0;
@@ -57,11 +58,17 @@ public class GUIManager : MonoBehaviour
     [Header("Enemy Powers")]
     [SerializeField] public UnityEngine.UI.Image[] enemyPowers;
     [SerializeField] public Text[] enemyPowersText;
-    Dictionary<int,int> enemyPowerCounter = new Dictionary<int,int>();
+    Dictionary<int, int> enemyPowerCounter = new Dictionary<int, int>();
 
     // COINS
+    [Header("Coins")]
     [SerializeField] public Text coins;
     int numCoins = 0;
+
+    // ACHIEVEMENTS
+    [Header("Achievements")]
+    [SerializeField] public GameObject listAcvm;
+    [SerializeField] public GameObject gritAcvm;
     void OnEnable()
     {
         Mediator.Instance.RegisterAction(SetRecharge, IEntity.TypeEvents.Recharge);
@@ -72,7 +79,10 @@ public class GUIManager : MonoBehaviour
         Mediator.Instance.RegisterAction(SetNumberEnemy, IEntity.TypeEvents.SetNumEnemy);
         Mediator.Instance.RegisterAction(SetImagePowersEnemy, IEntity.TypeEvents.SetPowerEnemy);
         Mediator.Instance.RegisterAction(SetImageEnemyCount, IEntity.TypeEvents.ImageEnemyCount);
-        Mediator.Instance.RegisterAction(SetCoins, IEntity.TypeEvents.SetCoins);       
+        Mediator.Instance.RegisterAction(SetCoins, IEntity.TypeEvents.SetCoins);
+        Mediator.Instance.RegisterAction(SetAchievements, IEntity.TypeEvents.SetAchievements);
+        Mediator.Instance.RegisterAction(EnableAchievementsPanel, IEntity.TypeEvents.EnableAchievementsPanel);
+        Mediator.Instance.RegisterAction(UpdateAchievements, IEntity.TypeEvents.UpdateAchievements);
     }
 
     // Start is called before the first frame update
@@ -86,8 +96,12 @@ public class GUIManager : MonoBehaviour
         maxBulletCounter = maxBulletStart;
 
         endGameObj.SetActive(false);
+        listAcvm.SetActive(false);
         activeBullet.text = maxBulletCounter + "/" + maxBulletStart;
         coins.enabled = false;
+
+        SetAchievements(coins);
+        endGame = false;
     }
 
     // Update is called once per frame
@@ -127,19 +141,19 @@ public class GUIManager : MonoBehaviour
         return recharging;
     }
 
-    public void SetRandomPowers(List<PowerInfo<IEntity>> powers)
+    public void SetRandomPowers(List<IEntity> powers)
     {
-        dicObjRandomGenerationPowers = new Dictionary<GameObject, PowerInfo<IEntity>>();
+        dicObjRandomGenerationPowers = new Dictionary<GameObject, IEntity>();
         powerObjRandomGenerateFather.SetActive(true);
         for (int i = 0; i < powers.Count; i++)
         {
             powersObjRandomGenerate[i].SetActive(true);
-            powersTextRandomGenerate[i].text = "NAME:" + powers[i].Entity.NamePower.ToString() + " VALUE: " + powers[i].Entity.EffectValue.ToString();
+            powersTextRandomGenerate[i].text = "NAME:" + powers[i].NamePower.ToString() + " VALUE: " + powers[i].EffectValue.ToString();
             dicObjRandomGenerationPowers.Add(powersObjRandomGenerate[i], powers[i]);
         }
     }
 
-    public void SetActivePowers(List<PowerInfo<IEntity>> powers)
+    public void SetActivePowers(List<IEntity> powers)
     {
         if (!powerActiveFather.active)
         {
@@ -148,7 +162,7 @@ public class GUIManager : MonoBehaviour
         for (int i = 0; i < powers.Count; i++)
         {
             powersObjActive[i].SetActive(true);
-            powersTextActive[i].text = "NAME:" + powers[i].Entity.NamePower.ToString() + " VALUE: " + powers[i].Entity.EffectValue.ToString();
+            powersTextActive[i].text = "NAME:" + powers[i].NamePower.ToString() + " VALUE: " + powers[i].EffectValue.ToString();
         }
     }
 
@@ -175,14 +189,14 @@ public class GUIManager : MonoBehaviour
 
     public void SetDamageGUI(object value)
     {
-        float convertDamageFill = ((float)(int)value/100f);
+        float convertDamageFill = ((float)(int)value / 100f);
 
         life.fillAmount -= convertDamageFill;
     }
 
     public void AddLifeGUI(object value)
     {
-        float convertAddFill = ((float)(int)value/100f);
+        float convertAddFill = ((float)(int)value / 100f);
 
         life.fillAmount += convertAddFill;
     }
@@ -192,24 +206,26 @@ public class GUIManager : MonoBehaviour
         numCoins += int.Parse(value.ToString());
         if (numCoins != 0)
         {
-            if(!coins.enabled)
+            if (!coins.enabled)
                 coins.enabled = true;
             coins.text = "X " + numCoins.ToString();
-        }else
-        coins.enabled=false;
+        }
+        else
+            coins.enabled = false;
     }
 
     public void SetEndGame(object value)
     {
+        endGame = true;
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         // Se vero richiamato da nemici
         if ((bool)value)
         {
-                endGameObj.SetActive(true);
-                endGameWin.enabled = true;
-                endGameLose.enabled = false;
-                endGameText.text = "YOU WIN!!";
-                Time.timeScale = 0;
+            endGameObj.SetActive(true);
+            endGameWin.enabled = true;
+            endGameLose.enabled = false;
+            endGameText.text = "YOU WIN!!";
+            Time.timeScale = 0;
         }
         else
         {
@@ -230,7 +246,7 @@ public class GUIManager : MonoBehaviour
     public void SetNumberEnemy(object value)
     {
         maxEnemy += int.Parse(value.ToString());
-        if(maxEnemy <= 0)
+        if (maxEnemy <= 0)
         {
             numberEnemies.enabled = false;
         }
@@ -264,6 +280,62 @@ public class GUIManager : MonoBehaviour
             enemyPowers[i].enabled = false;
             enemyPowersText[i].enabled = false;
         }
+    }
+
+    public void SetAchievements(object value)
+    {
+        List<IEntity> listAchievementsObj = Mediator.Instance.GetAchievementsMediatorObj();
+
+        foreach (IEntity item in listAchievementsObj)
+        {
+            GameObject acvmPowerPrefab = Resources.Load("Prefab/Acvm" + item.NamePower) as GameObject;
+            GameObject acvmPower = Instantiate(acvmPowerPrefab, Vector3.zero, Quaternion.identity, gritAcvm.transform);
+            //acvmPower.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ActiveAchievement); usato per attivarli da tasto
+            acvmPower.transform.GetChild(5).GetComponent<Text>().text = item.CounterUnlock.ToString() + "/" + item.MaxValueToUnlock.ToString();
+            float counter = float.Parse(item.CounterUnlock.ToString());
+            float maxValue = float.Parse(item.MaxValueToUnlock.ToString());
+            acvmPower.transform.GetChild(4).GetChild(0).GetComponent<Image>().fillAmount = (float)counter / maxValue;
+        }
+    }
+
+    public void UpdateAchievements(object value)
+    {
+        List<IEntity> listAchievementsObj = Mediator.Instance.GetAchievementsMediatorObj();
+
+        List<Transform> listObj = new List<Transform>();
+        int children = gritAcvm.transform.childCount;
+        for (int i = 0; i < children; ++i)
+            listObj.Add(gritAcvm.transform.GetChild(i));
+
+        for (int i = 0; i < listAchievementsObj.Count; i++)
+        {
+            for (int j = 0; j < listObj.Count; j++)
+            {
+                if (listObj[j].name.Contains(listAchievementsObj[i].NamePower))
+                {
+                    listObj[j].GetChild(5).GetComponent<Text>().text = listAchievementsObj[i].CounterUnlock.ToString() + "/" + listAchievementsObj[i].MaxValueToUnlock.ToString();
+                    float counter = float.Parse(listAchievementsObj[i].CounterUnlock.ToString());
+                    float maxValue = float.Parse(listAchievementsObj[i].MaxValueToUnlock.ToString());
+                    listObj[j].transform.GetChild(4).GetChild(0).GetComponent<Image>().fillAmount = (float)counter / maxValue;
+                }
+            }
+        }
+    }
+
+    public void EnableAchievementsPanel(object value)
+    {
+        if (endGame)
+            return;
+        if (!listAcvm.active && !endGameObj.active)
+            listAcvm.SetActive(true);
+        else
+            listAcvm.SetActive(false);
+    }
+
+    public void SetAchievementsEndGame()
+    {
+        listAcvm.SetActive(true);
+        endGameObj.SetActive(false);
     }
 
 }

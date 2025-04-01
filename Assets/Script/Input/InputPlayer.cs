@@ -27,5 +27,11 @@ public class InputPlayer : MonoBehaviour
             canFire = false;
             Mediator.Instance.StartAttack(Input.GetMouseButton(0));
         }
+
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Mediator.Instance.SetAction(true, IEntity.TypeEvents.EnableAchievementsPanel);
+        }
     }
 }

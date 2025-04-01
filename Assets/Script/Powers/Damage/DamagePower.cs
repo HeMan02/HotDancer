@@ -8,9 +8,11 @@ public class DamagePower : IDamage, IEntity
     public int EffectValueStart { get => 40 * Count; }
     public int EffectValuePower { get => 40 * Count; }  // Da cambiare gli altri parametri 
     public int Count { get => count; set { count = value; Init(); } } // ANDRE SUGGERIMENTO CON INIT
-    public IEntity.TypeEvents TypePowers { get; set; }
+    public IEntity.TypeEvents TypePowers => IEntity.TypeEvents.Damage;
 
-    PowerInfo<IEntity> powerInfo = null;
+    public int MaxValueToUnlock => throw new System.NotImplementedException();
+
+    public int CounterUnlock { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
     public DamagePower()
     {
@@ -25,16 +27,8 @@ public class DamagePower : IDamage, IEntity
 
     private void SetValuesStandard()
     {
-        if (powerInfo is null)
-        {
-            powerInfo = new PowerInfo<IEntity>();
-            powerInfo.Entity = this;
-            powerInfo.Entity.TypePowers = IEntity.TypeEvents.Damage;
-            powerInfo.Name = typeof(DamagePower).FullName;
-            PowersManager.Instance.RegisterPowerInterface<IDamage>(powerInfo);
-        }
-
-        Mediator.Instance.SetAction(powerInfo.Entity.EffectValueStart, IEntity.TypeEvents.Damage);
+        PowersManager.Instance.RegisterPowerInterface<IDamage>(this);
+        Mediator.Instance.SetAction(EffectValueStart, IEntity.TypeEvents.Damage);
     }
 
     public void DoDamage(int value)
@@ -44,10 +38,7 @@ public class DamagePower : IDamage, IEntity
 
     public void SetValuesPower(PowerInfo<IEntity> obj)
     {
-        powerInfo = new PowerInfo<IEntity>();
-        powerInfo.Entity = this;
-        powerInfo.Entity.TypePowers = IEntity.TypeEvents.Damage;
-        powerInfo.Name = typeof(DamagePower).FullName;
+
     }
 
     public void SetPower()
@@ -56,6 +47,26 @@ public class DamagePower : IDamage, IEntity
     }
     private void OnDestroy()
     {
-        PowersManager.Instance.UnregisterPower<IDamage>(powerInfo);
+        PowersManager.Instance.UnregisterPower<IDamage>(this);
+    }
+
+    public void InitAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void UpdateAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SaveAchievement()
+    {
+        throw new System.NotImplementedException();
     }
 }

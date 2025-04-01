@@ -1,20 +1,18 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Threading;
+using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
-public interface IEntity
+public interface IEntity : IAchievementsValues
 {
     public string NamePower { get;}
-
     public int EffectValue { get; }
-
     public int EffectValueStart { get;  }
-    public int EffectValuePower { get; } 
+    public int EffectValuePower { get; }
     public float Probability { get; }
     public int Time { get; }
     public int Count { get; set; }
 
-    public TypeEvents TypePowers { get; set; }
+    public TypeEvents TypePowers { get;}
 
     // 0000 
     // 0001 1<<0
@@ -52,6 +50,10 @@ public interface IEntity
         SetPowerEnemy,
         ImageEnemyCount,
         SetCoins,
+        SetAchievements,
+        EnableAchievement,
+        EnableAchievementsPanel,
+        UpdateAchievements,
     }
 
     public void Init();

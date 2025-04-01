@@ -18,19 +18,24 @@ public class GenerationObj : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // POWER PLAYER
         GenerateObj<DamagePower>();
         GenerateObj<SpeedPower>();
         GenerateObj<RechargePower>();
-        //GenerateObj<ExplosionEnemyDamage>();
         GenerateObj<BounceBullet>();
+
+
+        // ACHIEVEMENTS
         GenerateObj<Granade>();
-        GenerateObj<FreezeMovement>();
         GenerateObj<RechargeLife>();
+        GenerateObj<FreezeMovement>();
+        // POWER ENEMY
         GenerateObj<EnemySpeed>();
         GenerateObj<EnemyLife>();
         GenerateObj<EnemyDamage>();
 
-
+        // GENERATION ACHIEVEMENTS SALVATI JSON
+        Mediator.Instance.TryActiveAchievements();
 
     }
 

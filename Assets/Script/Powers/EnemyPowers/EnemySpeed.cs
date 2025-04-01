@@ -19,9 +19,11 @@ public class EnemySpeed : IPowerEnemy, IEntity
     public int Time { get => 1 * Count; }
 
     public int Count { get => count; set { count = value; Init(); } }
-    public IEntity.TypeEvents TypePowers { get; set; }
+    public IEntity.TypeEvents TypePowers => IEntity.TypeEvents.EnemySpeed;
 
-    PowerInfo<IEntity> powerInfo = null;
+    public int MaxValueToUnlock => throw new System.NotImplementedException();
+
+    public int CounterUnlock { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
     public EnemySpeed()
     {
@@ -35,21 +37,33 @@ public class EnemySpeed : IPowerEnemy, IEntity
 
     private void SetValuesStandard()
     {
-        if (powerInfo is null)
-        {
-            powerInfo = new PowerInfo<IEntity>();
-            powerInfo.Entity = this;
-            powerInfo.Entity.TypePowers = IEntity.TypeEvents.EnemySpeed;
-            powerInfo.Name = typeof(EnemySpeed).FullName;
-            PowersManager.Instance.RegisterPowerInterface<IPowerEnemy>(powerInfo);
-        }
-
+        PowersManager.Instance.RegisterPowerInterface<IPowerEnemy>(this);
         // Da valutare
-        Mediator.Instance.SetAction(powerInfo.Entity.EffectValueStart, IEntity.TypeEvents.EnemySpeed);
+        Mediator.Instance.SetAction(EffectValueStart, IEntity.TypeEvents.EnemySpeed);
     }
 
     private void OnDestroy()
     {
-        PowersManager.Instance.UnregisterPower<IPowerEnemy>(powerInfo);
+        PowersManager.Instance.UnregisterPower<IPowerEnemy>(this);
+    }
+
+    public void InitAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void UpdateAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SaveAchievement()
+    {
+        throw new System.NotImplementedException();
     }
 }

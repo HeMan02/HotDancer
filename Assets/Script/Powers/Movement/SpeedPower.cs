@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+using System;
 
 public class SpeedPower : IMovement, IEntity
 {
@@ -10,13 +6,18 @@ public class SpeedPower : IMovement, IEntity
     public string NamePower => "SpeedExtra";
     public int EffectValue { get => 5 * Count; }
     public float Probability { get => 5 * Count; }
+
     public int Time { get => 5 * Count; }
     public int EffectValueStart { get => 5 * Count; }
     public int EffectValuePower { get => 5 * Count; }
-    public int Count { get => count; set { count = value; Init(); } }
-    public IEntity.TypeEvents TypePowers { get; set; }
 
-    PowerInfo<IEntity> powerInfo = null;
+    public int Count { get => count; set { count = value; Init(); } }
+    public IEntity.TypeEvents TypePowers => IEntity.TypeEvents.Speed;
+
+    public int MaxValueToUnlock => throw new NotImplementedException();
+
+    public int CounterUnlock { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
     public SpeedPower()
     {
         Count = 1;
@@ -27,26 +28,17 @@ public class SpeedPower : IMovement, IEntity
         throw new System.NotImplementedException();
     }
 
+
     public void SetValuesPower(PowerInfo<IEntity> obj)
     {
-        powerInfo = new PowerInfo<IEntity>();
-        powerInfo.Entity = this;
-        powerInfo.Entity.TypePowers = IEntity.TypeEvents.Speed;
-        powerInfo.Name = typeof(SpeedPower).FullName;
     }
 
     private void SetValuesStandard()
     {
-        if(powerInfo is null)
-        {
-            powerInfo = new PowerInfo<IEntity>();
-            powerInfo.Entity = this;
-            powerInfo.Entity.TypePowers = IEntity.TypeEvents.Speed;
-            powerInfo.Name = typeof(SpeedPower).FullName;
-            PowersManager.Instance.RegisterPowerInterface<IMovement>(powerInfo);
-        }
 
-        Mediator.Instance.SetAction(powerInfo.Entity.EffectValueStart, IEntity.TypeEvents.Speed);
+        PowersManager.Instance.RegisterPowerInterface<IMovement>(this);
+
+        Mediator.Instance.SetAction(EffectValueStart, IEntity.TypeEvents.Speed);
 
     }
 
@@ -58,5 +50,25 @@ public class SpeedPower : IMovement, IEntity
     public void Init()
     {
         SetValuesStandard();
+    }
+
+    public void InitAchievement()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void UpdateAchievement()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void RemoveAchievement()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SaveAchievement()
+    {
+        throw new NotImplementedException();
     }
 }

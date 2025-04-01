@@ -12,9 +12,11 @@ public class RechargePower : IMovement, IEntity
     public int EffectValueStart { get => 2 * Count; }
     public int EffectValuePower { get => 2 * Count; }
     public int Count { get => count; set { count = value; Init(); } }
-    public IEntity.TypeEvents TypePowers { get; set; }
+    public IEntity.TypeEvents TypePowers => IEntity.TypeEvents.Recharge;
 
-    PowerInfo<IEntity> powerInfo = null;
+    public int MaxValueToUnlock => throw new System.NotImplementedException();
+
+    public int CounterUnlock { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
     public RechargePower()
     {
@@ -23,24 +25,13 @@ public class RechargePower : IMovement, IEntity
 
     public void SetValuesPower(PowerInfo<IEntity> obj)
     {
-        powerInfo = new PowerInfo<IEntity>();
-        powerInfo.Entity = this;
-        powerInfo.Entity.TypePowers = IEntity.TypeEvents.Recharge;
-        powerInfo.Name = typeof(RechargePower).FullName;
+
     }
 
     public void SetValuesStandard()
     {
-
-        if (powerInfo is null)
-        {
-            powerInfo = new PowerInfo<IEntity>();
-            powerInfo.Entity = this;
-            powerInfo.Entity.TypePowers = IEntity.TypeEvents.Recharge;
-            powerInfo.Name = typeof(RechargePower).FullName;
-            PowersManager.Instance.RegisterPowerInterface<IMovement>(powerInfo);
-        }
-        Mediator.Instance.SetAction(powerInfo.Entity.EffectValueStart, IEntity.TypeEvents.Recharge);
+        PowersManager.Instance.RegisterPowerInterface<IMovement>(this);
+        Mediator.Instance.SetAction(EffectValueStart, IEntity.TypeEvents.Recharge);
     }
 
     public void Init()
@@ -54,6 +45,26 @@ public class RechargePower : IMovement, IEntity
     }
 
     public void SetPower()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void InitAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void UpdateAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SaveAchievement()
     {
         throw new System.NotImplementedException();
     }

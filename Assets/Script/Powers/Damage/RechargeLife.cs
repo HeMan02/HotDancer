@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,9 +13,12 @@ public class RechargeLife : IDamage, IEntity
     public int EffectValueStart { get => 10 * Count; }
     public int EffectValuePower { get => 10 * Count; }
     public int Count { get => count; set { count = value; Init(); } }
-    public IEntity.TypeEvents TypePowers { get; set; }
+    public IEntity.TypeEvents TypePowers => IEntity.TypeEvents.RechargeLife;
 
-    PowerInfo<IEntity> powerInfo = null;
+    public int MaxValueToUnlock => 200;
+    [SerializeField]
+    private int counterUnlock;
+    public int CounterUnlock { get => counterUnlock; set { counterUnlock = value; } }
 
     public RechargeLife()
     {
@@ -23,31 +27,43 @@ public class RechargeLife : IDamage, IEntity
 
     public void SetValuesPower(PowerInfo<IEntity> obj)
     {
-        powerInfo = new PowerInfo<IEntity>();
-        powerInfo.Entity = this;
-        powerInfo.Entity.TypePowers = IEntity.TypeEvents.RechargeLife;
-        powerInfo.Name = typeof(RechargeLife).FullName;
     }
 
-    public void SetValuesStandard()
+    public void SetAchievementPower(object value)
     {
-
-        if(powerInfo is null)
+        if (Type.Equals(value.GetType(), this.GetType()))
         {
-            powerInfo = new PowerInfo<IEntity>();
-            powerInfo.Entity = this;
-            powerInfo.Entity.TypePowers = IEntity.TypeEvents.RechargeLife;
-            powerInfo.Name = typeof(RechargeLife).FullName;
-            PowersManager.Instance.RegisterPowerInterface<IMovement>(powerInfo);
+            PowersManager.Instance.RegisterPowerInterface<IMovement>(this);
         }
     }
 
     public void Init()
     {
-        SetValuesStandard();
+        InitAchievement();
     }
 
     public void DoDamage(int value)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void InitAchievement()
+    {
+        Mediator.Instance.SetAchievementPowerMediator<RechargeLife>(this);
+        Mediator.Instance.RegisterAction(SetAchievementPower, IEntity.TypeEvents.EnableAchievement);
+    }
+
+    public void UpdateAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SaveAchievement()
     {
         throw new System.NotImplementedException();
     }

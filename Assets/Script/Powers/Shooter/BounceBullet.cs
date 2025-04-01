@@ -12,10 +12,12 @@ public class BounceBullet : IShooter, IEntity
     public int EffectValueStart { get => 1 * Count; }
     public int EffectValuePower { get => 1 * Count; }  // Da cambiare gli altri parametri 
     public int Count { get => _count; set { _count = value; Init(); } } // ANDRE SUGGERIMENTO CON INIT
-    public IEntity.TypeEvents TypePowers { get; set; }
+    public IEntity.TypeEvents TypePowers => IEntity.TypeEvents.BounceBullet;
 
+    public int MaxValueToUnlock => throw new System.NotImplementedException();
 
-    PowerInfo<IEntity> powerInfo = null;
+    public int CounterUnlock { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
 
     public BounceBullet()
     {
@@ -29,14 +31,7 @@ public class BounceBullet : IShooter, IEntity
 
     private void SetValuesStandard()
     {
-        if(powerInfo is null)
-        {
-            powerInfo = new PowerInfo<IEntity>();
-            powerInfo.Entity = this;
-            powerInfo.Entity.TypePowers = IEntity.TypeEvents.BounceBullet;
-            powerInfo.Name = typeof(BounceBullet).FullName;
-            PowersManager.Instance.RegisterPowerInterface<IDamage>(powerInfo);
-        }
+            PowersManager.Instance.RegisterPowerInterface<IDamage>(this);
     }
 
     public void DoDamage(int value)
@@ -46,13 +41,30 @@ public class BounceBullet : IShooter, IEntity
 
     public void SetValuesPower(PowerInfo<IEntity> obj)
     {
-        powerInfo = new PowerInfo<IEntity>();
-        powerInfo.Entity = this;
-        powerInfo.Entity.TypePowers = IEntity.TypeEvents.BounceBullet;
-        powerInfo.Name = typeof(BounceBullet).FullName;
+
     }
 
     public void DoShoot(GameObject target)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void InitAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void UpdateAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SaveAchievement()
     {
         throw new System.NotImplementedException();
     }

@@ -5,10 +5,13 @@ public class GUIMenuNavigation : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject buttonReturnMainMenu;
+    public GameObject buttonQuit;
     void Start()
     {
         if (buttonReturnMainMenu)
             buttonReturnMainMenu.SetActive(false);
+        if (buttonQuit)
+            buttonQuit.SetActive(false);
         Time.timeScale = 1;
     }
 
@@ -19,6 +22,8 @@ public class GUIMenuNavigation : MonoBehaviour
         {
             if (buttonReturnMainMenu)
                 buttonReturnMainMenu.SetActive(true);
+            if (buttonQuit)
+                buttonQuit.SetActive(true);
             Time.timeScale = 0;
         }
     }
@@ -30,12 +35,20 @@ public class GUIMenuNavigation : MonoBehaviour
 
     public void ReturnInGame()
     {
-        buttonReturnMainMenu.SetActive(false);
+        if (buttonReturnMainMenu)
+            buttonReturnMainMenu.SetActive(false);
+        if (buttonQuit)
+            buttonQuit.SetActive(false);
         Time.timeScale = 1;
     }
 
     public void ReturnToMainMenu()
     {
         SceneManager.LoadScene("MenuScene");
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

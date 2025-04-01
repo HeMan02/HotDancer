@@ -192,7 +192,7 @@ public class EnemyManager : MonoBehaviour
     {
         int randomPower = UnityEngine.Random.Range(0, arrayPowersEnemy.Length);
 
-        PowerInfo<IEntity> powerEnemy = Mediator.Instance.GetPowerMediator(arrayPowersEnemy[randomPower]);
+        IEntity powerEnemy = Mediator.Instance.GetPowerMediator(arrayPowersEnemy[randomPower]);
         Mediator.Instance.SetActivePower(powerEnemy);
         Mediator.Instance.SetAction((int)Mediator.Instance.GetValuePower(arrayPowersEnemy[randomPower]), arrayPowersEnemy[randomPower]);
         Mediator.Instance.SetAction(randomPower, IEntity.TypeEvents.SetPowerEnemy);

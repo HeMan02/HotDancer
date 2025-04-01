@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Granade : IShooter, IEntity
 {
     private int _count;
@@ -12,10 +14,14 @@ public class Granade : IShooter, IEntity
     public int EffectValueStart { get => 1 * Count; }
     public int EffectValuePower { get => 1 * Count; }  // Da cambiare gli altri parametri 
     public int Count { get => _count; set { _count = value; Init(); } } // ANDRE SUGGERIMENTO CON INIT
-    public IEntity.TypeEvents TypePowers { get; set; }
+    public IEntity.TypeEvents TypePowers => IEntity.TypeEvents.Granade;
 
+    // ACHIEVEMENTS
+    [SerializeField]
+    private int counterUnlock;
+    public int MaxValueToUnlock => 100;
 
-    PowerInfo<IEntity> powerInfo = null;
+    public int CounterUnlock { get => counterUnlock; set { counterUnlock = value; } }
 
     public Granade()
     {
@@ -24,18 +30,14 @@ public class Granade : IShooter, IEntity
 
     public void Init()
     {
-        SetValuesStandard();
+        InitAchievement();
     }
 
-    private void SetValuesStandard()
+    public void SetAchievementPower(object value)
     {
-        if(powerInfo is null)
+        if (Type.Equals(value.GetType(), this.GetType()))
         {
-            powerInfo = new PowerInfo<IEntity>();
-            powerInfo.Entity = this;
-            powerInfo.Entity.TypePowers = IEntity.TypeEvents.Granade;
-            powerInfo.Name = typeof(BounceBullet).FullName;
-            PowersManager.Instance.RegisterPowerInterface<IDamage>(powerInfo);
+            PowersManager.Instance.RegisterPowerInterface<IMovement>(this);
         }
     }
 
@@ -46,14 +48,32 @@ public class Granade : IShooter, IEntity
 
     public void SetValuesPower(PowerInfo<IEntity> obj)
     {
-        powerInfo = new PowerInfo<IEntity>();
-        powerInfo.Entity = this;
-        powerInfo.Entity.TypePowers = IEntity.TypeEvents.Granade;
-        powerInfo.Name = typeof(BounceBullet).FullName;
+
     }
 
     public void DoShoot(GameObject target)
     {
         throw new System.NotImplementedException();
+    }
+
+    public void InitAchievement()
+    {
+        Mediator.Instance.SetAchievementPowerMediator<Granade>(this);
+        Mediator.Instance.RegisterAction(SetAchievementPower, IEntity.TypeEvents.EnableAchievement);
+    }
+
+    public void UpdateAchievement()
+    {
+        Mediator.Instance.SetAchievementPowerMediator<Granade>( this);
+    }
+
+    public void RemoveAchievement()
+    {
+        Mediator.Instance.RemoveAchievementMediator<Granade>();
+    }
+
+    public void SaveAchievement()
+    {
+        Mediator.Instance.SaveAchievementsOnJson();
     }
 }

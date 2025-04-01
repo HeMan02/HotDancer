@@ -115,6 +115,8 @@ public class Enemy : MonoBehaviour, IConvertibleValues
                     Mediator.Instance.SetAction(true, IEntity.TypeEvents.KillEnemy);
                     Mediator.Instance.SetAction(-1, IEntity.TypeEvents.SetNumEnemy);
                     Mediator.Instance.SetAction(1, IEntity.TypeEvents.SetCoins);
+                    Mediator.Instance.UpdateValueCounterAchievementMediator(1);
+                    Mediator.Instance.SetAction(1, IEntity.TypeEvents.UpdateAchievements);
                     Destroy(this.gameObject);
                 }
             }

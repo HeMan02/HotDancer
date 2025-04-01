@@ -12,8 +12,8 @@ public class GUIPowerTimerGeneration : MonoBehaviour
     public Image timerCard;
     public GameObject[] powersObj;
     public int indexPowerEnable;
-    List<PowerInfo<IEntity>> powerRandomGenerate;
-    PowerInfo<IEntity> activePower;
+    List<IEntity> powerRandomGenerate;
+    IEntity activePower;
     public GameObject powerFather;
     float timerGenerationPowerPlayer;
     public GameData gameData;
@@ -55,28 +55,28 @@ public class GUIPowerTimerGeneration : MonoBehaviour
 
         for (int i = 0; i < powersObj.Length; i++)
         {
-            if (powersObj[i].name.Equals(powerRandomGenerate[indexPowerEnable].Entity.NamePower))
+            if (powersObj[i].name.Equals(powerRandomGenerate[indexPowerEnable].NamePower))
             {
                 powersObj[i].SetActive(true);
                 timerCard = powersObj[i].transform.GetChild(1).GetComponent<Image>();
 
-                if (!dicListPowerEnable.ContainsKey(powerRandomGenerate[indexPowerEnable].Entity))
+                if (!dicListPowerEnable.ContainsKey(powerRandomGenerate[indexPowerEnable]))
                 {
-                    GameObject powerActiveObjPrefab = Resources.Load("Prefab/Power" + powerRandomGenerate[indexPowerEnable].Entity.NamePower) as GameObject;
+                    GameObject powerActiveObjPrefab = Resources.Load("Prefab/Power" + powerRandomGenerate[indexPowerEnable].NamePower) as GameObject;
                     GameObject powerGui = Instantiate(powerActiveObjPrefab, powerActiveObjPrefab.transform.position, powerActiveObjPrefab.transform.rotation);
-                    dicListPowerEnable.Add(powerRandomGenerate[indexPowerEnable].Entity, powerGui);
+                    dicListPowerEnable.Add(powerRandomGenerate[indexPowerEnable], powerGui);
                     Text powerText = powerGui.transform.GetChild(2).GetComponent<Text>();
                     powerText.text = "1";                   
                     powerGui.transform.parent = powerFather.transform;
                 }
                 else
                 {              
-                    Text powerText = dicListPowerEnable[powerRandomGenerate[indexPowerEnable].Entity].transform.GetChild(2).GetComponent<Text>();
+                    Text powerText = dicListPowerEnable[powerRandomGenerate[indexPowerEnable]].transform.GetChild(2).GetComponent<Text>();
                     int value = int.Parse(powerText.text.ToString());
                     value += 1;
-                    GameObject a = dicListPowerEnable[powerRandomGenerate[indexPowerEnable].Entity];
+                    GameObject a = dicListPowerEnable[powerRandomGenerate[indexPowerEnable]];
                     a.transform.GetChild(2).GetComponent<Text>().text = value.ToString();
-                    dicListPowerEnable[powerRandomGenerate[indexPowerEnable].Entity] = a;
+                    dicListPowerEnable[powerRandomGenerate[indexPowerEnable]] = a;
                 }          
             }
             else

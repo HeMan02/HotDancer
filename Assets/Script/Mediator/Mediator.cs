@@ -36,26 +36,70 @@ public class Mediator : IPlayerMovement, IConvertibleValues
             PowersManager.Instance.SetAttack(value);
     }
 
-    public List<PowerInfo<IEntity>> GetRandomPowersMediator()
+    public List<IEntity> GetRandomPowersMediator()
     {
-        List<PowerInfo<IEntity>> randomPowers = PowersManager.Instance.GetRandomPowers();
+        List<IEntity> randomPowers = PowersManager.Instance.GetRandomPowers();
         return randomPowers;
     }
 
-    public List<PowerInfo<IEntity>> GetListPowersMediator()
+    public List<IEntity> GetListPowersMediator()
     {
-        List<PowerInfo<IEntity>> randomPowers = PowersManager.Instance.GetListPowers();
+        List<IEntity> randomPowers = PowersManager.Instance.GetListPowers();
         return randomPowers;
     }
 
-    public PowerInfo<IEntity> GetPowerMediator(IEntity.TypeEvents eventPower)
+    public IEntity GetPowerMediator(IEntity.TypeEvents eventPower)
     {
         return PowersManager.Instance.GetPower(eventPower);
     }
 
-    public void SetActivePower(PowerInfo<IEntity> power)
+    public void SetActivePower(IEntity power)
     {
         PowersManager.Instance.UpdatePower(power);
+    }
+
+    public void SetAchievementPowerMediator<T>(IEntity data) where T : class
+    {
+        SerializableManager<IEntity>.RegisterObj(data);
+    }
+
+    public List<IEntity> GetAchievementsMediatorObj()
+    {
+        List<object> listObj = SerializableManager<IEntity>.GetListAchievementsObj();
+        List<IEntity> listAchievements = listObj.Cast<IEntity>().ToList();
+
+        return listAchievements;
+    }
+
+    public void SaveAchievementsValueMediator()
+    {
+        SerializableManager<IEntity>.GenerationObjSaved();
+    }
+
+    public void TryActiveAchievements()
+    {
+        // Verifico se ci sono Achievement sbloccati dentro al json
+        // Se presenti gli attivo la action per renderli utilizzabili
+        List<object> listObj = SerializableManager<IEntity>.GenerationObjSaved();
+        if (listObj == null)
+            return;
+
+        foreach (object obj in listObj)
+        {
+            IEntity acvmObj = (IEntity)obj;
+            if (acvmObj.CounterUnlock >= acvmObj.MaxValueToUnlock)
+                SetAction(obj, IEntity.TypeEvents.EnableAchievement);
+        }
+    }
+
+    public void SaveAchievementsOnJson()
+    {
+        SerializableManager<IEntity>.GenerateJsonData();
+    }
+
+    public void RemoveAchievementMediator<T>() where T : class
+    {
+        SerializableManager<IEntity>.RemoveAchievement<T>();
     }
 
     public void RegisterAction(Action<object> a, IEntity.TypeEvents events)
@@ -72,8 +116,7 @@ public class Mediator : IPlayerMovement, IConvertibleValues
 
     public int GetValuePower(IEntity.TypeEvents eventPower)
     {
-
-                return PowersManager.Instance.GetValuePower(eventPower);
+        return PowersManager.Instance.GetValuePower(eventPower);
     }
 
     public void UnregisterAction(Action<object> a, IEntity.TypeEvents events)
@@ -86,11 +129,16 @@ public class Mediator : IPlayerMovement, IConvertibleValues
 
     public bool CheckPowerEnable(IEntity.TypeEvents eventPower)
     {
-         return PowersManager.Instance.CheckPower(eventPower);
+        return PowersManager.Instance.CheckPower(eventPower);
     }
 
-    public void DisablePower(PowerInfo<IEntity> power)
+    public void DisablePower(IEntity power)
     {
-        PowerInfo<IEntity> powerUpdate = PowersManager.Instance.DisablePower(power);
+        IEntity powerUpdate = PowersManager.Instance.DisablePower(power);
+    }
+
+    public void UpdateValueCounterAchievementMediator(object value)
+    {
+        SerializableManager<IEntity>.UpdateValueMultiAchievements(value);
     }
 }

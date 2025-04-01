@@ -8,9 +8,11 @@ public class ExplosionEnemyDamage : IDamage, IEntity
     public int EffectValueStart { get => 1 * Count; }
     public int EffectValuePower { get => 1 * Count; }  // Da cambiare gli altri parametri 
     public int Count { get => _count; set { _count = value; Init(); } } // ANDRE SUGGERIMENTO CON INIT
-    public IEntity.TypeEvents TypePowers { get; set; }
+    public IEntity.TypeEvents TypePowers => IEntity.TypeEvents.ExplosionDamageEnemy;
 
-    PowerInfo<IEntity> powerInfo = null;
+    public int MaxValueToUnlock => throw new System.NotImplementedException();
+
+    public int CounterUnlock { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
     public ExplosionEnemyDamage()
     {
@@ -25,14 +27,7 @@ public class ExplosionEnemyDamage : IDamage, IEntity
 
     private void SetValuesStandard()
     {
-        if (powerInfo is null)
-        {
-            powerInfo = new PowerInfo<IEntity>();
-            powerInfo.Entity = this;
-            powerInfo.Entity.TypePowers = IEntity.TypeEvents.ExplosionDamageEnemy;
-            powerInfo.Name = typeof(ExplosionEnemyDamage).FullName;
-            PowersManager.Instance.RegisterPowerInterface<IDamage>(powerInfo);
-        }
+            PowersManager.Instance.RegisterPowerInterface<IDamage>(this);
     }
 
     public void DoDamage(int value)
@@ -42,13 +37,29 @@ public class ExplosionEnemyDamage : IDamage, IEntity
 
     public void SetValuesPower(PowerInfo<IEntity> obj)
     {
-        powerInfo = new PowerInfo<IEntity>();
-        powerInfo.Entity = this;
-        powerInfo.Entity.TypePowers = IEntity.TypeEvents.ExplosionDamageEnemy;
-        powerInfo.Name = typeof(ExplosionEnemyDamage).FullName;
     }
 
     public void SetPower()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void InitAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void UpdateAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SaveAchievement()
     {
         throw new System.NotImplementedException();
     }

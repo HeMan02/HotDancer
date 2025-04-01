@@ -18,9 +18,12 @@ public class EnemyDamage : IPowerEnemy, IEntity
     public int Time { get => 1 * Count; }
 
     public int Count { get => count; set { count = value; Init(); } }
-    public IEntity.TypeEvents TypePowers { get; set; }
+    public IEntity.TypeEvents TypePowers => IEntity.TypeEvents.EnemyDamage;
 
-    PowerInfo<IEntity> powerInfo = null;
+    public int MaxValueToUnlock => throw new System.NotImplementedException();
+
+    public int CounterUnlock { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
 
     public EnemyDamage()
     {
@@ -34,22 +37,33 @@ public class EnemyDamage : IPowerEnemy, IEntity
 
     private void SetValuesStandard()
     {
-        if (powerInfo is null)
-        {
-            powerInfo = new PowerInfo<IEntity>();
-            powerInfo.Entity = this;
-            powerInfo.Entity.TypePowers = IEntity.TypeEvents.EnemyDamage;
-            powerInfo.Name = typeof(EnemyDamage).FullName;
-            PowersManager.Instance.RegisterPowerInterface<IPowerEnemy>(powerInfo);
-        }
-
+        PowersManager.Instance.RegisterPowerInterface<IPowerEnemy>(this);
         // Da valutare
-        Mediator.Instance.SetAction(powerInfo.Entity.EffectValueStart, IEntity.TypeEvents.EnemyDamage);
+        Mediator.Instance.SetAction(EffectValueStart, IEntity.TypeEvents.EnemyDamage);
     }
 
     private void OnDestroy()
     {
-        PowersManager.Instance.UnregisterPower<IPowerEnemy>(powerInfo);
+        PowersManager.Instance.UnregisterPower<IPowerEnemy>(this);
     }
 
+    public void InitAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void UpdateAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void RemoveAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SaveAchievement()
+    {
+        throw new System.NotImplementedException();
+    }
 }
