@@ -1,5 +1,5 @@
 # HotDancer
-![Conventional Commits](https://img.shields.io/badge/version-1.0.1-green.svg)
+![Conventional Commits](https://img.shields.io/badge/version-2.0.0-green.svg)
 
 <!---Link to the helpful section: [Link Text](#thisll-be-a-helpful-section-about-the-greek-letter-Θ). --->
 
@@ -13,6 +13,7 @@
 
 > [!IMPORTANT]
 > The Build to test the game it is on repo folder "Build".
+> Version2.0 update: Add Achievements
 
 ### Table of Contents
 list
