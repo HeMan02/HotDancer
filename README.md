@@ -16,7 +16,12 @@
 > Version2.0 update: Add Achievements
 
 ### Table of Contents
-list
+* [Motivation](#motivation).
+* [Introduction and Content](#introduction-and-content).
+* [Code Example](#code-example).
+* [Assets and Audio](#assets-and-audio).
+* [Game Logic](#game-logic).
+* [Bugs](#bugs).
 
 ### Motivation
 I started developing this project for the wrong reason: my goal was to design and grow up my programming skill.
