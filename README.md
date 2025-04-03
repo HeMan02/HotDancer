@@ -39,7 +39,56 @@ Actually it was satisfying at all to create a scalable and genetics project.
 * Creation of build and screen adaptation
 
 ### Code Example
+Event dispatcher example 
+```
+public Dictionary<IEntity.TypeEvents, Action<object>> actions = new Dictionary<IEntity.TypeEvents, Action<object>>();
 
+public void SetAction(object value, IEntity.TypeEvents events)
+{
+    if (actions.Keys.Contains(events))
+    actions[events].Invoke(value);
+}
+
+public void RegisterAction(Action<object> a, IEntity.TypeEvents events)
+{
+    if (actions.ContainsKey(events))
+    {
+      actions[events] += a;
+    }
+    else
+    {
+      actions.Add(events, a);
+    }
+}
+```
+Achievements generics example 
+```
+private static Dictionary<Type, SaveData<T>> dicSerializableObj = new Dictionary<Type, SaveData<T>>();
+
+public class SaveData<T> : ISerializable where T : class
+{
+    public object GetObj()
+    {
+       return data;
+    }
+
+    public void SetObj(object obj)
+    {
+      data = (T)obj;
+    }
+
+    [SerializeReference]
+    public T data;
+}
+
+[Serializable]
+[SerializeField]
+public class ListSaveData<T> where T : class
+{
+     [SerializeField]
+     public List<SaveData<T>> listData;
+}
+```
 ### Assets and Audio
 
 Use all free asssets.
