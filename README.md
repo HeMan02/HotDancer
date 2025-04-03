@@ -28,7 +28,10 @@ I started developing this project for the wrong reason: my goal was to design an
 Actually it was satisfying at all to create a scalable and genetics project.
 
 ### Introduction and Content
-* Event dispatcher, Design pattern used: Mediator for communication between the various classes using Events and Delegate
+* Pattern used:
+  - Service Locator
+  - Event Dispatcher
+  - Singleton
 * Serialize and historicized saving Achievements: Use of serialization of generic types T with manager Achievements with generic management
 * Design scalability and generic reuse of classes and interfaces
 * Design division and use of Assembly Definition
