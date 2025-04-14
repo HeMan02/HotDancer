@@ -10,8 +10,8 @@ public class BounceBullet : IShooter, IEntity
     public float Probability { get => 1 * Count; }
     public int Time { get => 60 * Count; }
     public int EffectValueStart { get => 1 * Count; }
-    public int EffectValuePower { get => 1 * Count; }  // Da cambiare gli altri parametri 
-    public int Count { get => _count; set { _count = value; Init(); } } // ANDRE SUGGERIMENTO CON INIT
+    public int EffectValuePower { get => 1 * Count; }
+    public int Count { get => _count; set { _count = value; Init(); } }
     public IEntity.TypeEvents TypePowers => IEntity.TypeEvents.BounceBullet;
 
     public int MaxValueToUnlock => throw new System.NotImplementedException();

@@ -31,15 +31,17 @@ public class GUIPowerTimerGeneration : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        timerGeneration += Time.deltaTime/ timerGenerationPowerPlayer;
-        timerCard.fillAmount -= timerGeneration;
-        if (timerCard.fillAmount <= 0)
+        if (Time.timeScale != 0)
         {
-            timerCard.fillAmount = 1;
-            timerGeneration = 0;
-            ChangePower();
-            Mediator.Instance.SetAction(true, IEntity.TypeEvents.ChangePower);
+            timerGeneration += Time.deltaTime / timerGenerationPowerPlayer;
+            timerCard.fillAmount -= timerGeneration;
+            if (timerCard.fillAmount <= 0)
+            {
+                timerCard.fillAmount = 1;
+                timerGeneration = 0;
+                ChangePower();
+                Mediator.Instance.SetAction(true, IEntity.TypeEvents.ChangePower);
+            }
         }
     }
 

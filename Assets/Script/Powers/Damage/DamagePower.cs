@@ -6,8 +6,8 @@ public class DamagePower : IDamage, IEntity
     public float Probability { get => 40 * Count; }
     public int Time { get => 40 * Count; }
     public int EffectValueStart { get => 40 * Count; }
-    public int EffectValuePower { get => 40 * Count; }  // Da cambiare gli altri parametri 
-    public int Count { get => count; set { count = value; Init(); } } // ANDRE SUGGERIMENTO CON INIT
+    public int EffectValuePower { get => 40 * Count; }
+    public int Count { get => count; set { count = value; Init(); } }
     public IEntity.TypeEvents TypePowers => IEntity.TypeEvents.Damage;
 
     public int MaxValueToUnlock => throw new System.NotImplementedException();

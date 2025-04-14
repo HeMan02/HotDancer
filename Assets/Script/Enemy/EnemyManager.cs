@@ -20,7 +20,7 @@ public class EnemyManager : MonoBehaviour
 
     // DATA SPAWN
     [SerializeField]
-    public int maxTimeToSpawn = 3;
+    public int maxTimeToSpawn = 5;
     public int[] maxEnemyForSpawnPoint;
     public int counterEnemyOnSpawnPoint = 0;
     [FormerlySerializedAs("thisIsMyOldField")]
@@ -69,7 +69,7 @@ public class EnemyManager : MonoBehaviour
         Mediator.Instance.RegisterAction(SetNumberEnemy, IEntity.TypeEvents.SetNumEnemy);
         stepUpgradeEnemyTimer = gameData.stepUpgradeEnemyTimer;
         SetTypeEnemy();
-        coroutine = StartGeneration(2);
+        coroutine = StartGeneration(4);
         StartCoroutine(coroutine);
     }
 

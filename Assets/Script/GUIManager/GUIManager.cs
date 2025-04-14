@@ -216,6 +216,7 @@ public class GUIManager : MonoBehaviour
 
     public void SetEndGame(object value)
     {
+        listAcvm.SetActive(false);
         endGame = true;
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         // Se vero richiamato da nemici

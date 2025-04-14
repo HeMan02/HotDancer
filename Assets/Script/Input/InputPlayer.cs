@@ -1,6 +1,7 @@
 using System.Security.Principal;
 using UnityEngine;
 
+
 public class InputPlayer : MonoBehaviour
 {
     float timerShooter = 0;
@@ -11,6 +12,7 @@ public class InputPlayer : MonoBehaviour
     {
         Mediator.Instance.SetAction(Input.GetAxisRaw("Horizontal"), IEntity.TypeEvents.InputHz);
         Mediator.Instance.SetAction(Input.GetAxisRaw("Vertical"), IEntity.TypeEvents.InputVt);
+        
 
         if (!canFire)
         {

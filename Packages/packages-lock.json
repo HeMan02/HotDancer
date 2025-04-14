@@ -177,6 +177,20 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.serializable": {
+      "version": "https://github.com/HeMan02/AchievementsGenerics.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "b5eef428e19e231a5df564e10bf7d38dd291eee0"
+    },
+    "com.unity.servicelocator": {
+      "version": "https://github.com/HeMan02/ServiceLocator.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "c049eae2dc7a5092f5641faa614c0d2b649abd37"
+    },
     "com.unity.test-framework": {
       "version": "1.1.33",
       "depth": 0,
