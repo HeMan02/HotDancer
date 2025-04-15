@@ -1,5 +1,5 @@
 # HotDancer
-![Conventional Commits](https://img.shields.io/badge/version-3.0.0-green.svg)
+![Conventional Commits](https://img.shields.io/badge/version-4.0.0-green.svg)
 
 <!---Link to the helpful section: [Link Text](#thisll-be-a-helpful-section-about-the-greek-letter-Θ). --->
 
